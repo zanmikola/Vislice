@@ -1,5 +1,5 @@
 # Vislice
 Učimo se uporabljat git.
-Borut Pahor
+Jurij Vega
 Ivan Vidav
 Matija Pretnar
