@@ -1,5 +1,5 @@
 # Vislice
 Učimo se uporabljat git.
-Marjan Šarec
+Borut Pahor
 Ivan Vidav
 Matija Pretnar
