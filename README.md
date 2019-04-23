@@ -1,5 +1,5 @@
 # Vislice
 Učimo se uporabljat git.
-Jurij Vega
+Marjan Šarec
 Ivan Vidav
 Matija Pretnar
