@@ -1,5 +1,2 @@
 # Vislice
-Učimo se uporabljat git.
-Jurij Vega
-Ivan Vidav
-Matija Pretnar
+Učimo se narediti vislice
