@@ -6,6 +6,8 @@ PONOVLJENA_CRKA = '0'
 NAPACNA_CRKA = '-'
 ZMAGA = 'W'
 PORAZ = 'X'
+ZACETEK = 'Z'
+
 
 class Igra:
     def __init__(self, niz, seznam=[]):
@@ -46,7 +48,7 @@ class Igra:
             if crka in self.crke:
                 niz1+= crka + ' '
             else:
-                niz1+= '_'
+                niz1+= '_ '
         return niz1
 
 
@@ -83,4 +85,23 @@ with open('besede.txt', 'r') as nabor_besed:
 def nova_igra():
     return Igra(random.choice(bazen_besed))
     
+class Vislice:
+    def __init__(self):
+        self.igre = {}
     
+    def prost_id_igre(self):
+        if self.igre == {}:
+            return 0
+        else:
+            return max(self.igre.keys()) + 1
+    
+    def nova_igra(self):
+        id = self.prost_id_igre()
+        igra = nova_igra()
+        self.igre[id] = (igra, ZACETEK)
+        return id
+    
+    def ugibaj(self, id, crka):
+        igra, _ = self.igre[id]
+        stanje = igra.ugibaj(crka)
+        self.igre[id] = (igra, stanje)
