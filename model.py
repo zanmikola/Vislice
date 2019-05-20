@@ -10,9 +10,9 @@ ZACETEK = 'Z'
 
 
 class Igra:
-    def __init__(self, niz, seznam=[]):
+    def __init__(self, niz, seznam=None):
         self.geslo = niz
-        self.crke = seznam
+        self.crke = [] if seznam == None else seznam
 
     def napacne_crke(self):
         seznam_napacnih = []

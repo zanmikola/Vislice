@@ -13,7 +13,7 @@
     <small>Študentje</small>
   </blockquote>
 
- <tabel>
+ <table>
   <tr>
    <td>
 
@@ -28,7 +28,7 @@
    </td>
    
   </tr>
- </tabel>
+ </table>
 
 
   % if stanje == model.ZMAGA:
@@ -41,7 +41,9 @@
   % elif stanje == model.PORAZ:
   <h1> IZGUBILI STE! </h1>
   Pravilno geslo: <h4> {{igra.geslo}} </h4>
-
+<form action="/igra/" method="post">
+    <button type="submit">Nova igra</button>
+  </from>
   % else:
 
   <form action="/igra/{{id_igre}}/" method="POST">
