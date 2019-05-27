@@ -1,10 +1,6 @@
 % import model
+% rebase ('base.tpl', title='Vislice')
 
-<!DOCTYPE html>
-
-<html>
-
-<body>
 
   <h1>Vislice</h1>
 
@@ -34,23 +30,20 @@
   % if stanje == model.ZMAGA:
   <h1> ZMAGA! </h1>
   
-  <form action="/igra/" method="post">
+  <form action="/nova_igra/" method="post">
     <button type="submit">Nova igra</button>
   </from>
 
   % elif stanje == model.PORAZ:
   <h1> IZGUBILI STE! </h1>
   Pravilno geslo: <h4> {{igra.geslo}} </h4>
-<form action="/igra/" method="post">
+<form action="/nova_igra/" method="post">
     <button type="submit">Nova igra</button>
   </from>
   % else:
 
-  <form action="/igra/{{id_igre}}/" method="POST">
+  <form action="/igra/" method="POST">
     Črka: <input type="text" name="crka">
     <button type="submit">Pošlji ugib</button>
   </form>
   % end
-</body>
-
-</html>

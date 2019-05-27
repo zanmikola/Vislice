@@ -1,4 +1,5 @@
 import random
+import json
 
 STEVILO_DOVOLJENIH_NAPAK = 10
 PRAVILNA_CRKA = '+'
@@ -7,6 +8,8 @@ NAPACNA_CRKA = '-'
 ZMAGA = 'W'
 PORAZ = 'X'
 ZACETEK = 'Z'
+DATOTEKA_S_STANJEM = 'stanje.json'
+DATOTEKA_Z_BESEDAMI = 'besede.txt'
 
 
 class Igra:
@@ -86,9 +89,10 @@ def nova_igra():
     return Igra(random.choice(bazen_besed))
     
 class Vislice:
-    def __init__(self):
+    def __init__(self, datoteka_s_stanjem, datoteka_z_besedami="besede.txt"):
         self.igre = {}
-    
+        self.datoteka_s_stanjem = datoteka_s_stanjem
+        self.datoteka_z_besedami = datoteka_z_besedami
     def prost_id_igre(self):
         if self.igre == {}:
             return 0
@@ -96,12 +100,30 @@ class Vislice:
             return max(self.igre.keys()) + 1
     
     def nova_igra(self):
-        id = self.prost_id_igre()
-        igra = nova_igra()
-        self.igre[id] = (igra, ZACETEK)
-        return id
+        self.nalozi_igre_iz_datoteke()
+        id_igre = self.prost_id_igre()
+        with open(self.datoteka_z_besedami, encoding='utf-8') as f:
+            bazen_besed =[vrstica.strip().upper() for vrstica in f]
+        igra = Igra(random.choice(bazen_besed))
+        self.igre[id_igre] = (igra, ZACETEK)
+        self.zapisi_igre_v_datoteko()
+        return id_igre
     
-    def ugibaj(self, id, crka):
-        igra, _ = self.igre[id]
-        stanje = igra.ugibaj(crka)
-        self.igre[id] = (igra, stanje)
+    def ugibaj(self, id_igre, crka):
+        self.nalozi_igre_iz_datoteke()
+        igra, _ = self.igre[id_igre]
+        poskus = igra.ugibaj(crka)
+        self.igre[id_igre] = (igra, poskus)
+        self.zapisi_igre_v_datoteko()
+
+    def nalozi_igre_iz_datoteke(self):
+        with open(self.datoteka_s_stanjem, 'r', encoding='utf-8') as f:
+            igre = json.load(f)
+            self.igre = {int(id_igre): (Igra(geslo, crke), poskus) for id_igre, ((geslo, crke), poskus) in igre.items()}
+        return
+
+    def zapisi_igre_v_datoteko(self):
+        with open(self.datoteka_s_stanjem, 'w', encoding='utf-8') as f:
+            igre = {id_igre: ((igra.geslo, igra.crke), poskus) for id_igre, (igra, poskus) in self.igre.items()}
+            json.dump(igre, f)
+        return
